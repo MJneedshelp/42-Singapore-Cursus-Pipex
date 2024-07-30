@@ -1,0 +1,10 @@
+Using old fd
+Using dup fd
+Original fd: 3 | dup fd: 4 | dup2 fd: 1
+This will now go in the file as well
+Using old fd
+Using dup fd
+Original fd: 3 | dup fd: 4 | dup2 fd: 1
+This will now go in the file as well
+First line read from pipe: msg 1
+Second line read from pipe: msg 2
