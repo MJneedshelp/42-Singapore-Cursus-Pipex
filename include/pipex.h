@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:55:37 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/03 17:02:50 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/06 20:34:53 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,22 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include "libft.h"
+
+typedef struct s_pipex
+{
+    char    **cmd_paths;        //array of strings. 
+    char    ***cmd_args;        //arrary of array of strings. Should be NULL terminated for both levels of arrays
+    int     cmd_num;            //number of commands
+    char    *infile;            //infile from main(argv) -> check if you need this in the struct
+    char    *outfile;           //outfile from main(argv) -> check if you need this in the struct
+}   t_pipex;
 
 
+
+
+
+/* Initialisation functions */
+char    **get_paths(char *envp[]);
 
 #endif

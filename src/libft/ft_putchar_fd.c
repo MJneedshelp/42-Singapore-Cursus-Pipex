@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testexecve.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 11:30:25 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/06 18:54:45 by mintan           ###   ########.fr       */
+/*   Created: 2024/05/25 10:30:53 by mintan            #+#    #+#             */
+/*   Updated: 2024/05/25 12:33:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "../../include/libft.h"
 
-int main(void)
+/* Description: Outputs the character 'c' to the given file descriptor.*/
+
+void	ft_putchar_fd(char c, int fd)
 {
-    char    *args[] = {"-l", NULL};
-    char    *envp[] = {NULL};
-
-    execve("/usr/bin/ls", args, envp);
-
-    printf("We are not going to see this\n");
-    return (1);
-
+	write(fd, &c, sizeof(char));
 }

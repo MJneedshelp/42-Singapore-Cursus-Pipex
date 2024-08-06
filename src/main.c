@@ -6,12 +6,12 @@
 /*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:44:26 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/03 19:05:11 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/06 20:41:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-
+#include "../include/pipex.h"
 
 
 /* Main logic
@@ -67,7 +67,23 @@
 
 */
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *envp[])
 {
+    
+    char    *str;
+
+    str = (char *)malloc(5 * sizeof(char));
+    
+    //return (free(str), 0);
+    exit (free(str));
+    
+    
+    //1. Init pipex structure
+
+    //2. Check if there are at least 4 arguments -> done
+
+    //3. get cmds from the argv[]
+
+    //4. get cmd arguments from argv[]
 
 }

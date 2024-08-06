@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testpipeworkflow.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 05:02:38 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/06 05:02:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/06 09:14:29 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ int	main(void)
 		//child process 1. Execute first command
 		//execve does takes over the process and does not return anything
 		//dup2 to duplicate write into the pipe from standard output
+		printf("In child process 1 test\n");
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execve("/usr/bin/ls", {"ls", NULL}, {NULL});
+
+		char	*args[] = {"ls", NULL};
+		char	*envp[] = {NULL};
+		execve("/usr/bin/ls", args, envp);
 	}
 
 	pid_2 = fork();
@@ -61,7 +65,12 @@ int	main(void)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 		close(fd[1]);
-		execve("/usr/bin/grep", {"grep", "test", NULL}, NULL);
+
+		printf("In child process 2\n");
+
+		char	*args[] = {"grep", "test", NULL};
+		char	*envp[] = {NULL};
+		execve("/usr/bin/grep", args, envp);
 	}
 
 	close(fd[0]);

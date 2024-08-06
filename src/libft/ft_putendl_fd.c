@@ -1,26 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testexecve.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 11:30:25 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/06 18:54:45 by mintan           ###   ########.fr       */
+/*   Created: 2024/05/25 10:30:53 by mintan            #+#    #+#             */
+/*   Updated: 2024/05/25 13:58:53 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
+#include "../../include/libft.h"
 
-int main(void)
+/* Description: Outputs the string 's' to the given file descriptor followed
+   by a newline. */
+
+void	ft_putendl_fd(char *s, int fd)
 {
-    char    *args[] = {"-l", NULL};
-    char    *envp[] = {NULL};
-
-    execve("/usr/bin/ls", args, envp);
-
-    printf("We are not going to see this\n");
-    return (1);
-
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
