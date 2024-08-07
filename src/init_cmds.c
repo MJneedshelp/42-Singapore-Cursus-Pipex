@@ -30,14 +30,18 @@
 */
 char	*get_cmd_path(char *full_cmd, char **paths)
 {
+	char	**split;
 	char	*cmd;
 	char	*cmd_path;
 	int		i;
 
 	i = 0;
-	cmd = ft_split(full_cmd, ' ')[0];
-	if (cmd == NULL)
+	split = ft_split(full_cmd, ' ');
+	if (split == NULL)
 		return (NULL);
+	cmd = ft_strdup(split[0]);
+	if (cmd == NULL)
+		return (free(split), NULL);
 	while (paths[i] != NULL)
 	{
 		cmd_path = ft_pathjoin(paths[i], cmd);
@@ -55,11 +59,10 @@ char	*get_cmd_path(char *full_cmd, char **paths)
    Actions:
 	1. Retrieves the command path in argv[1] to argv[n-1]. Use ft_split
 	2. str_dup each command path in to pp->cmd_paths
-	3. If any of the malloc fails, set cmd args as NULL and return
+	3. If any of the malloc fails, set cmd paths as NULL and return
 */
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths)
 {
-	// char	*cmd;
 	char	*cmd_path;
 	int		i;
 	int		j;
@@ -87,6 +90,38 @@ void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths)
 		j++;
 	}
 }
+
+/* Description: populates the pp->cmd_args in the t_pipex struct
+   Actions:
+	1. Retrieves the command args in argv[1] to argv[n-1]. Use ft_split
+	2. If any of the malloc fails, set cmd args as NULL and return
+*/
+void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
+{
+	char	**cmd_arg;
+	int		i;
+	int		j;
+
+	i = 2;
+	j = 0;
+	while (i < argc - 1)
+	{
+		cmd_arg = ft_split(argv[i], ' ');
+		if (cmd_arg == NULL)
+		{
+			//probably needs a function here to clean up all the previous pp->cmd arg mallocs
+			pp->cmd_args = NULL;
+			return;
+		}
+		pp->cmd_args[j] = cmd_arg;
+		i++;
+		j++;
+	}
+}
+
+
+
+
 
 
 
@@ -123,9 +158,11 @@ int main(int argc, char *argv[], char *envp[])
 
 	j = 0;
 	init_cmd_paths(pp, argc, argv, paths);
+	init_cmd_args(pp, argc, argv);
 	while (j < pp->cmd_num)
 	{
 		printf("Command path: %s\n", pp->cmd_paths[j]);
+		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
 		j++;
 	}
 

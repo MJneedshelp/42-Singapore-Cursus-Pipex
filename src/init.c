@@ -17,9 +17,9 @@
    malloc for the following members:
    - cmd_num: number of commands passed in from argv[]
    - cmd_paths: an array of strings containing the full file path of each of the
-     binaries
-   - cmd_arg: an array of array of strings containg the arguments to be used
-   for each command
+     binaries. To be used as the first argument for execve()
+   - cmd_arg: an array of array of strings containing the arguments to be used
+   for each command. To be used as the second argument for execve()
    - TO ADD ON AS REQUIRED
 */
 t_pipex *init_pipex(int cmd_num)
