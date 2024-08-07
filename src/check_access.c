@@ -18,7 +18,7 @@
 int main(void)
 {
     int     access_res;
-    char    file[] = "a.out";
+    char    file[] = "/usr/bin/ls";
 
     access_res = access(file, F_OK);
     printf("File: %s, File exists: %d\n", file, access_res);
