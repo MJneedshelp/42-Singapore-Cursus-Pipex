@@ -70,14 +70,18 @@
 int main(int argc, char *argv[], char *envp[])
 {
 
-    char    *str;
+    t_pipex	*pp;
 
-    str = (char *)malloc(5 * sizeof(char));
+	// Check if there are at least 4 arguments
+	if (argc < 5)
+		return (1);
+	pp = init_pipex(argc - 3);
+	if (pp == NULL)
+		return (2);
 
-    //return (free(str), 0);
-    exit (free(str));
 
 
+	//might want to combine all the init stuff together in 1 function
     //1. Init pipex structure
 
     //2. Check if there are at least 4 arguments -> done

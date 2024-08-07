@@ -83,6 +83,8 @@ char    **get_paths(char *envp[])
 int main(int argc, char *argv[], char *envp[])
 {
     t_pipex *pp;
+	char	**paths;
+	int		i;
 
     // char    *args[] = {"ls", NULL};
     // char    *envp[] = {NULL};
@@ -90,7 +92,14 @@ int main(int argc, char *argv[], char *envp[])
     // execve("/usr/bin/ls", args, envp);
     printf("No. of args: %d\n", argc);
     pp = init_pipex(argc);
+	paths = get_paths(envp);
 
     printf("Argument count: %d\n", pp->cmd_num);
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		printf("path: %s\n", paths[i]);
+		i++;
+	}
 
 }

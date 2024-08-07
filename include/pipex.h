@@ -24,7 +24,7 @@
 
 typedef struct s_pipex
 {
-    char    **cmd_paths;        //array of strings. 
+    char    **cmd_paths;        //array of strings.
     char    ***cmd_args;        //arrary of array of strings. Should be NULL terminated for both levels of arrays
     int     cmd_num;            //number of commands
     char    *infile;            //infile from main(argv) -> check if you need this in the struct
@@ -36,6 +36,7 @@ typedef struct s_pipex
 
 
 /* Initialisation functions */
+t_pipex *init_pipex(int cmd_num);
 char    **get_paths(char *envp[]);
 
 #endif
