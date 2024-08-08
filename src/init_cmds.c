@@ -126,44 +126,42 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
 
 
 
-int main(int argc, char *argv[], char *envp[])
-{
-    t_pipex *pp;
-	char	**paths;
-	int		i;
-	int		j;
-	char	*cmds;
+// int main(int argc, char *argv[], char *envp[])
+// {
+//     t_pipex *pp;
+// 	char	**paths;
+// 	int		i;
+// 	int		j;
+// 	char	*cmds;
 
-    // char    *args[] = {"ls", NULL};
-    // char    *envp[] = {NULL};
+//     printf("No. of argc: %d\n", argc);
+//     pp = init_pipex(argc - 3);
+// 	paths = get_paths(envp);
 
-    // execve("/usr/bin/ls", args, envp);
-    printf("No. of argc: %d\n", argc);
-    pp = init_pipex(argc - 3);
-	paths = get_paths(envp);
+//     printf("Argument count: %d\n", pp->cmd_num);
+// 	i = 0;
+// 	while (paths[i] != NULL)
+// 	{
+// 		printf("path: %s\n", paths[i]);
+// 		i++;
+// 	}
 
-    printf("Argument count: %d\n", pp->cmd_num);
-	i = 0;
-	while (paths[i] != NULL)
-	{
-		printf("path: %s\n", paths[i]);
-		i++;
-	}
+// 	// cmds = ft_split(argv[1], ' ')[0];
+// 	// printf("Split commands. 0[%s]\n", cmds);
+// 	// cmds = ft_pathjoin(paths[4], cmds);
+// 	// printf("Try path.join: %s\n", cmds);
+// 	// printf("File: %s, Execute access: %d\n", cmds, access(cmds, X_OK));
 
-	// cmds = ft_split(argv[1], ' ')[0];
-	// printf("Split commands. 0[%s]\n", cmds);
-	// cmds = ft_pathjoin(paths[4], cmds);
-	// printf("Try path.join: %s\n", cmds);
-	// printf("File: %s, Execute access: %d\n", cmds, access(cmds, X_OK));
+// 	j = 0;
+// 	init_cmd_paths(pp, argc, argv, paths);
+// 	init_cmd_args(pp, argc, argv);
+// 	while (j < pp->cmd_num)
+// 	{
+// 		printf("Command path: %s\n", pp->cmd_paths[j]);
+// 		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
+// 		j++;
+// 	}
 
-	j = 0;
-	init_cmd_paths(pp, argc, argv, paths);
-	init_cmd_args(pp, argc, argv);
-	while (j < pp->cmd_num)
-	{
-		printf("Command path: %s\n", pp->cmd_paths[j]);
-		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
-		j++;
-	}
+// 	open_files(pp, argv[1], )
 
-}
+// }

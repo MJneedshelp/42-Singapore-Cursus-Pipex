@@ -12,6 +12,7 @@
 
 #include "../include/pipex.h"
 #include "../include/libft.h"
+#include "../include/ft_printf.h"
 
 /* Description: Initialises the t_pipex structure by allocating memory with
    malloc for the following members:
@@ -77,40 +78,63 @@ char    **get_paths(char *envp[])
 
 
 
+/* Description: main workflow for initialisation. Validates the incoming
+   parameters and sets up the t_pipex structure.
+   Actions:
+    1. XXXXXXXXXX
+*/
+t_pipex	*init_main(int argc, char *argv[], char *envp[])
+{
+    t_pipex	*pp;
+    char	**paths;
+
+	i = 0;
+
+    if (argc < 5)
+		exit(EXIT_FAILURE);
+    pp = init_pipex(argc - 3);
+    init_files(pp, argv[1], argv[argc - 1]);
+    paths = get_paths(envp);
+    if (paths == NULL)
+	{
+        //probably need a clean up function to settle the things inside the pp structure
+	}
+	init_cmd_paths(pp, argc, argv, paths);
+	init_cmd_args(pp, argc, argv);
+	return (pp);
 
 
 
 
+    //probably need a clean up function to settle the things inside the pp structure
+
+}
 
 
 
-// int main(int argc, char *argv[], char *envp[])
-// {
-//     t_pipex *pp;
-// 	char	**paths;
-// 	int		i;
-// 	char	*cmds;
 
-//     // char    *args[] = {"ls", NULL};
-//     // char    *envp[] = {NULL};
+int	main(int argc, char *argv[], char *envp[])
+{
+    t_pipex *pp;
+	int		i;
+	int		j;
+	char	*cmds;
 
-//     // execve("/usr/bin/ls", args, envp);
-//     printf("No. of args: %d\n", argc);
-//     pp = init_pipex(argc);
-// 	paths = get_paths(envp);
+	j = 0;
+    printf("Inside the main to test init\n");
+	printf("No. of argc: %d\n", argc);
+    pp = init_main(argc, argv, envp);
+	//check all the shit inside the structure
+    printf("No. of commands: %d\n", pp->cmd_num);
 
-//     printf("Argument count: %d\n", pp->cmd_num);
-// 	i = 0;
-// 	while (paths[i] != NULL)
-// 	{
-// 		printf("path: %s\n", paths[i]);
-// 		i++;
-// 	}
+	while (j < pp->cmd_num)
+	{
+		printf("Command path: %s\n", pp->cmd_paths[j]);
+		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
+		j++;
+	}
+	printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
 
-// 	cmds = ft_split(argv[1], ' ')[0];
-// 	printf("Split commands. 0[%s]\n", cmds);
-// 	cmds = ft_pathjoin(paths[4], cmds);
-// 	printf("Try path.join: %s\n", cmds);
-// 	printf("File: %s, Execute access: %d\n", cmds, access(cmds, X_OK));
 
-// }
+
+}

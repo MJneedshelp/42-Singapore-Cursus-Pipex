@@ -22,6 +22,7 @@ int	main(void)
 	int	fd[2];
 	int	pid_1;
 	int pid_2;
+	int	pid_3;
 	int	fd_infile;
 	int	fd_outfile;
 
@@ -52,7 +53,7 @@ int	main(void)
 		close(fd[0]);
 		close(fd[1]);
 
-		char	*args[] = {"grep", "old", NULL};
+		char	*args[] = {"grep", "msg", NULL};
 		char	*envp[] = {NULL};
 		execve("/usr/bin/grep", args, envp);
 	}

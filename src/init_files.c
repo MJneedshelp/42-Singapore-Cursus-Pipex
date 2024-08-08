@@ -13,19 +13,6 @@
 #include "../include/pipex.h"
 #include "../include/libft.h"
 
-/* Description: Opens the infile and outfile and add them to the
-   struct.
-   Actions:
-	- Opens the infile with O_RDONLY
-	- Opens the outfile with O_CREATE, O_EXCL and O_WRONLY
-*/
-void	open_files(t_pipex *pp, char *infile, char *outfile)
-{
-    pp->fd_in = open(infile, O_RDONLY);
-	pp->fd_out = open(outfile, O_CREAT | O_EXCL | O_WRONLY);
-}
-
-
 /* Description: Closes the infile and outfile. Only closes if the fd >= 0.
    Function should only be used after file opening.
 */
@@ -37,7 +24,23 @@ void	close_files(t_pipex *pp)
 		close(pp->fd_out);
 }
 
-
+/* Description: Opens the infile and outfile and add them to the
+   struct.
+   Actions:
+	- Opens the infile with O_RDONLY
+	- Opens the outfile with O_CREATE, O_EXCL and O_WRONLY
+*/
+void	init_files(t_pipex *pp, char *infile, char *outfile)
+{
+	pp->fd_in = open(infile, O_RDONLY);
+	pp->fd_out = open(outfile, O_CREAT | O_WRONLY);
+	if (pp->fd_in == -1 || pp->fd_out == -1)
+	{
+		close_files(pp);
+		//probably need some clean up function to handle all the things in side pp before exiting
+		exit(EXIT_FAILURE);
+	}
+}
 
 
 
