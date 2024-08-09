@@ -1,10 +1,9 @@
-Using old fd
-Using dup fd
-Original fd: 3 | dup fd: 4 | dup2 fd: 1
-This will now go in the file as well
-Using old fd
-Using dup fd
-Original fd: 3 | dup fd: 4 | dup2 fd: 1
-This will now go in the file as well
-First line read from pipe: msg 1
-Second line read from pipe: msg 2
+Symbol 1a lalala
+Symbol 1b lalala
+Symbol 1c lalala
+not
+not
+not
+Symbol 2a lalala
+Symbol 2b lalala
+Symbol 2c lalala

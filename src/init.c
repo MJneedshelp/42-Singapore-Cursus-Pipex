@@ -88,7 +88,6 @@ t_pipex	*init_main(int argc, char *argv[], char *envp[])
     t_pipex	*pp;
     char	**paths;
 
-	i = 0;
 
     if (argc < 5)
 		exit(EXIT_FAILURE);
