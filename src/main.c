@@ -91,3 +91,31 @@ int main(int argc, char *argv[], char *envp[])
     //4. get cmd arguments from argv[]
 
 }
+
+
+int	main(int argc, char *argv[], char *envp[])
+{
+    t_pipex *pp;
+	int		i;
+	int		j;
+	char	*cmds;
+
+	j = 0;
+    printf("Inside the main to test init\n");
+	printf("No. of argc: %d\n", argc);
+    pp = init_main(argc, argv, envp);
+	//check all the shit inside the structure
+    printf("No. of commands: %d\n", pp->cmd_num);
+
+	while (j < pp->cmd_num)
+	{
+		printf("Command path: %s\n", pp->cmd_paths[j]);
+		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
+		j++;
+	}
+	printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
+	exe_cmd(pp);
+
+
+
+}
