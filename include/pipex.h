@@ -42,7 +42,8 @@ void	init_files(t_pipex *pp, char *infile, char *outfile);
 void	close_files(t_pipex *pp);
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths);
 void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
-
+int		exe_cmd(t_pipex *pp);
+void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in);
 
 
 

@@ -85,22 +85,22 @@ int	main(void)
 			if (cmd_counter == 0)
 			{
 				char	*args1[] = {"cat", NULL};
-				execve("/usr/bin/cat", args1, envp);
+				execve("/usr/bin/cat", args1, NULL);
 			}
 			else if (cmd_counter == 1)
 			{
 				char	*args2[] = {"grep", "Symbol", NULL};
-				execve("/usr/bin/grep", args2, envp);
+				execve("/usr/bin/grep", args2, NULL);
 			}
 			else if (cmd_counter == 2)
 			{
 				char	*args2[] = {"grep", "1", NULL};
-				execve("/usr/bin/grep", args2, envp);
+				execve("/usr/bin/grep", args2, NULL);
 			}
 			else
 			{
 				char	*args3[] = {"wc", "-l", NULL};
-				execve("/usr/bin/wc", args3, envp);
+				execve("/usr/bin/wc", args3, NULL);
 			}
 		}
 

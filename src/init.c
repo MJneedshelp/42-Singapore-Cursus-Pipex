@@ -133,6 +133,7 @@ int	main(int argc, char *argv[], char *envp[])
 		j++;
 	}
 	printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
+	exe_cmd(pp);
 
 
 
