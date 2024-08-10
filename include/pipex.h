@@ -25,7 +25,7 @@
 typedef struct s_pipex
 {
     char	**cmd_paths;        //array of strings.
-    char	***cmd_args;        //arrary of array of strings. Should be NULL terminated for both levels of arrays
+    char	***cmd_args;        //array of array of strings. Should be NULL terminated for both levels of arrays
     int		cmd_num;            //number of commands
     int		fd_in;            //infile from main(argv) -> check if you need this in the struct
     int		fd_out;           //outfile from main(argv) -> check if you need this in the struct
