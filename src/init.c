@@ -88,9 +88,6 @@ t_pipex	*init_main(int argc, char *argv[], char *envp[])
     t_pipex	*pp;
     char	**paths;
 
-
-    if (argc < 5)
-		exit(EXIT_FAILURE);
     pp = init_pipex(argc - 3);
     init_files(pp, argv[1], argv[argc - 1]);
     paths = get_paths(envp);

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
+#include "include/pipex.h"
 
 /* Description: xxxxxxx
 */
@@ -18,10 +18,10 @@
 int main(void)
 {
     int     access_res;
-    char    file[] = "/usr/bin/ls";
+    char    file[] = "woozy";
 
     access_res = access(file, F_OK);
-    printf("File: %s, File exists: %d\n", file, access_res);
+    printf("Here File: %s, File exists: %d\n", file, access_res);
     if (access_res < 0)
         perror("");
     access_res = access(file, R_OK);
@@ -34,6 +34,10 @@ int main(void)
         perror("");
     access_res = access(file, X_OK);
     printf("File: %s, Execute access: %d\n", file, access_res);
+    if (access_res < 0)
+        perror("");
+    access_res = access(file, F_OK | W_OK);
+    printf("File: %s, Exists and Write access: %d\n", file, access_res);
     if (access_res < 0)
         perror("");
 }

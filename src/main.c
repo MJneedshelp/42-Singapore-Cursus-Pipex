@@ -67,17 +67,7 @@
 
 */
 
-int main(int argc, char *argv[], char *envp[])
-{
 
-    t_pipex	*pp;
-
-	// Check if there are at least 4 arguments
-	if (argc < 5)
-		return (1);
-	pp = init_pipex(argc - 3);
-	if (pp == NULL)
-		return (2);
 
 
 
@@ -90,32 +80,43 @@ int main(int argc, char *argv[], char *envp[])
 
     //4. get cmd arguments from argv[]
 
-}
+
 
 
 int	main(int argc, char *argv[], char *envp[])
 {
-    t_pipex *pp;
-	int		i;
-	int		j;
+	t_pipex *pp;
 	char	*cmds;
 
-	j = 0;
-    printf("Inside the main to test init\n");
-	printf("No. of argc: %d\n", argc);
-    pp = init_main(argc, argv, envp);
-	//check all the shit inside the structure
-    printf("No. of commands: %d\n", pp->cmd_num);
+	if (argc < 5)
+		return (1);
+	pp = init_pipex(argc - 3);
 
-	while (j < pp->cmd_num)
-	{
-		printf("Command path: %s\n", pp->cmd_paths[j]);
-		printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
-		j++;
-	}
-	printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
+
+	pp = init_main(argc, argv, envp);
+
 	exe_cmd(pp);
+	//smth to clean up all the mallocs
 
 
 
+	// i = 0;
+
+
+
+
+	// printf("Inside the main to test init\n");
+	// printf("No. of argc: %d\n", argc);
+    // pp = init_main(argc, argv, envp);
+	// //check all the shit inside the structure
+    // printf("No. of commands: %d\n", pp->cmd_num);
+
+	// while (i < pp->cmd_num)
+	// {
+	// 	printf("Command path: %s\n", pp->cmd_paths[j]);
+	// 	printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
+	// 	i++;
+	// }
+	// printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
+	// exe_cmd(pp);
 }

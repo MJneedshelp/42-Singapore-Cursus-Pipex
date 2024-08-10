@@ -38,8 +38,9 @@ typedef struct s_pipex
 /* Initialisation functions */
 t_pipex	*init_pipex(int cmd_num);
 char	**get_paths(char *envp[]);
-void	init_files(t_pipex *pp, char *infile, char *outfile);
 void	close_files(t_pipex *pp);
+t_pipex	*init_main(int argc, char *argv[], char *envp[]);
+void	init_files(t_pipex *pp, char *infile, char *outfile);
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths);
 void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
 int		exe_cmd(t_pipex *pp);
