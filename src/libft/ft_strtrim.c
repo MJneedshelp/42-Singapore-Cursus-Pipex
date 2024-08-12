@@ -42,11 +42,9 @@ static size_t	findfst(char const *s1, char const *set, size_t len)
 
 static size_t	findlst(char const *s1, char const *set, size_t len)
 {
-	size_t	i;
 	size_t	j;
 	size_t	setlen;
 
-	i = len;
 	setlen = ft_strlen(set);
 	while (len > 0)
 	{

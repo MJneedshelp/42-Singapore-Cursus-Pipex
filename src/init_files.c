@@ -55,7 +55,7 @@ void	init_files(t_pipex *pp, char *infile, char *outfile)
 		if (access(outfile, W_OK) < 0)
 		{
 			perror("");
-			//probably need some clean up function to handle all the things in side pp before exiting
+			free_pipex_empty(pp);
 			exit(EXIT_FAILURE);
 		}
 		else

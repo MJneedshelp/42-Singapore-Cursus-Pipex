@@ -46,6 +46,15 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
 int		exe_cmd(t_pipex *pp);
 void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in);
 
+/* Clean up functions */
+void	free_pipex_empty(t_pipex *pp);
+void	free_pipex(t_pipex *pp);
+void	free_stray(char **arr, int n);
+void	free_astray(char ***arr, int n);
+void	free_ft_split(char **arr);
+
+
+
 
 
 

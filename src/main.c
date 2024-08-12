@@ -87,15 +87,28 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex *pp;
 	char	*cmds;
+	char	**paths;
 
 	if (argc < 5)
 		return (1);
 	pp = init_pipex(argc - 3);
-
-
-	pp = init_main(argc, argv, envp);
-
+	init_files(pp, argv[1], argv[argc - 1]);
+	paths = get_paths(envp);
+	if (paths == NULL)
+		free_pipex_empty(pp);
+	init_cmd_paths(pp, argc, argv, paths);
+	init_cmd_args(pp, argc, argv);
 	exe_cmd(pp);
+	free_ft_split(paths);
+	free_pipex(pp);
+
+	// printf("Pointer for pp->cmd_paths: %p | Pointer for pp->cmd_args: %p\n", pp->cmd_paths, pp->cmd_args);
+	// return (0);
+
+
+	// pp = init_main(argc, argv, envp);
+
+	// exe_cmd(pp);
 	//smth to clean up all the mallocs
 
 

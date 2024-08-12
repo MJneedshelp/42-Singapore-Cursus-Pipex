@@ -40,8 +40,9 @@ char	*get_cmd_path(char *full_cmd, char **paths)
 	if (split == NULL)
 		return (NULL);
 	cmd = ft_strdup(split[0]);
+	free_ft_split(split);
 	if (cmd == NULL)
-		return (free(split), NULL);
+		return (NULL);
 	while (paths[i] != NULL)
 	{
 		cmd_path = ft_pathjoin(paths[i], cmd);
@@ -63,7 +64,6 @@ char	*get_cmd_path(char *full_cmd, char **paths)
 */
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths)
 {
-	char	*cmd_path;
 	int		i;
 	int		j;
 
@@ -71,20 +71,12 @@ void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths)
 	j = 0;
 	while (i < argc - 1)
 	{
-		cmd_path = get_cmd_path(argv[i], paths);
-		if (cmd_path == NULL)
-		{
-			//probably needs a function here to clean up all the previous pp->cmd path mallocs
-			pp->cmd_paths = NULL;
-			return;
-		}
-		pp->cmd_paths[j] = ft_strdup(cmd_path);
-		free (cmd_path);
+		pp->cmd_paths[j] = get_cmd_path(argv[i], paths);
 		if (pp->cmd_paths[j] == NULL)
 		{
-			//probably needs a function here to clean up all the previous pp->cmd path mallocs
-			pp->cmd_paths = NULL;
-			return;
+			free_stray(pp->cmd_paths, j);
+			free_pipex_empty(pp);
+			exit(EXIT_FAILURE);
 		}
 		i++;
 		j++;
@@ -107,13 +99,14 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
 	while (i < argc - 1)
 	{
 		cmd_arg = ft_split(argv[i], ' ');
+		pp->cmd_args[j] = cmd_arg;
 		if (cmd_arg == NULL)
 		{
-			//probably needs a function here to clean up all the previous pp->cmd arg mallocs
-			pp->cmd_args = NULL;
-			return;
+			free_astray(pp->cmd_args, j);
+			free_stray(pp->cmd_paths, pp->cmd_num);
+			free_pipex_empty(pp);
+			exit;
 		}
-		pp->cmd_args[j] = cmd_arg;
 		i++;
 		j++;
 	}

@@ -73,6 +73,7 @@ char    **get_paths(char *envp[])
     if (path == NULL)
         return (NULL);
     paths = ft_split(path, ':');
+	free(path);
     return (paths);
 }
 
@@ -83,28 +84,22 @@ char    **get_paths(char *envp[])
    Actions:
     1. XXXXXXXXXX
 */
-t_pipex	*init_main(int argc, char *argv[], char *envp[])
-{
-    t_pipex	*pp;
-    char	**paths;
+// t_pipex	*init_main(int argc, char *argv[], char *envp[])
+// {
+//     t_pipex	*pp;
+//     char	**paths;
 
-    pp = init_pipex(argc - 3);
-    init_files(pp, argv[1], argv[argc - 1]);
-    paths = get_paths(envp);
-    if (paths == NULL)
-	{
-        //probably need a clean up function to settle the things inside the pp structure
-	}
-	init_cmd_paths(pp, argc, argv, paths);
-	init_cmd_args(pp, argc, argv);
-	return (pp);
+//     pp = init_pipex(argc - 3);
+//     init_files(pp, argv[1], argv[argc - 1]);
+//     paths = get_paths(envp);
+//     if (paths == NULL)
+// 		free_pipex_empty(pp);
+// 	init_cmd_paths(pp, argc, argv, paths);
+// 	init_cmd_args(pp, argc, argv);
+// 	return (pp);
+//    //probably need a clean up function to settle the things inside the pp structure
 
-
-
-
-    //probably need a clean up function to settle the things inside the pp structure
-
-}
+// }
 
 
 

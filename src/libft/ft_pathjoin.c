@@ -20,11 +20,14 @@
 
 char	*ft_pathjoin(char const *s1, char const *s2)
 {
-	char	*ptr;
+	const char	*intermediate_path;
+	char		*combined_path;
 
-	ptr = ft_strjoin(s1, "/");
-	if (ptr == NULL)
+	intermediate_path = ft_strjoin(s1, "/");
+	if (intermediate_path == NULL)
 		return (NULL);
-	ptr = ft_strjoin(ptr, s2);
-	return (ptr);
+	combined_path = ft_strjoin(intermediate_path, s2);
+	free(intermediate_path);
+	return (combined_path);
+
 }
