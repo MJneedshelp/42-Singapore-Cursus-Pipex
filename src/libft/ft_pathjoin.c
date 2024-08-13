@@ -20,7 +20,7 @@
 
 char	*ft_pathjoin(char const *s1, char const *s2)
 {
-	const char	*intermediate_path;
+	char	*intermediate_path;
 	char		*combined_path;
 
 	intermediate_path = ft_strjoin(s1, "/");
