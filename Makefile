@@ -22,10 +22,11 @@ LIBFT_LIB = $(LIBDIR)/libft.a
 # Double check sources again
 PIPEX_SRCS = $(SRCDIR)/main.c $(SRCDIR)/init.c $(SRCDIR)/init_files.c \
 			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c
-PIPEX_OBJ = $(PUSHSWAP_SRCS:.c=.o)
+PIPEX_OBJ = $(PIPEX_SRCS:.c=.o)
 
 # Target to make using Make all
-all: $(NAME) print_art
+# all: $(NAME) print_art -> check this out later
+all: $(NAME)
 
 # Generate the programme by compiling the objects with libft.a
 $(NAME): $(LIBFT_LIB) $(PIPEX_OBJ)
@@ -54,18 +55,18 @@ re:	fclean all
 # Phony targets
 .PHONY: all clean re fclean
 
-print_art:
-	@echo"████████████████████████"
-	@echo"██▒▒▒▒░░░░░░░░░░░░    ██"
-	@echo"██▒▒▒▒░░░░░░░░░░░░    ██"
-	@echo"████████████████████████"
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
-	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# print_art:
+# 	@echo"████████████████████████"
+# 	@echo"██▒▒▒▒░░░░░░░░░░░░    ██"
+# 	@echo"██▒▒▒▒░░░░░░░░░░░░    ██"
+# 	@echo"████████████████████████"
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "
+# 	@echo"  ██▒▒▒▒░░░░░░░░░░░░██  "

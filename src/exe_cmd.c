@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/09 16:49:19 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/13 10:28:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 
 */
 
-int	exe_cmd(t_pipex *pp)
+void	exe_cmd(t_pipex *pp)
 {
 	int	fd[2];
 	int	ctr;
@@ -52,10 +52,12 @@ int	exe_cmd(t_pipex *pp)
 	while (ctr < pp->cmd_num)
 	{
 		if (pipe(fd) == -1)
-			return (perror(""), 1);
+			// return (perror(""), 1);
+			return;
 		pid_chd = fork();
 		if (pid_chd < 0)
-			return (perror(""), 2);
+			// return (perror(""), 2);
+			return;
 		if (pid_chd == 0)
 		{
 			redirection(fd, ctr, pp, fd_in);

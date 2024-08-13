@@ -105,7 +105,7 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
 			free_astray(pp->cmd_args, j);
 			free_stray(pp->cmd_paths, pp->cmd_num);
 			free_pipex_empty(pp);
-			exit;
+			exit(EXIT_FAILURE);
 		}
 		i++;
 		j++;

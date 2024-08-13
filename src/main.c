@@ -12,81 +12,16 @@
 
 
 #include "../include/pipex.h"
-
-
-/* Main logic
-
-
-    1. create pipe
-    2. fork to get a child process
-        a. in parent process, close the write end of the pipe. Leave the read end of the pipe open to receive information from child process
-        b. in child process, close the read  end of the pipe. Leave the write end of the pipe open to pass back the output of execve back to parent process
-    3. execute the shell command in the child process using execve. Execve takes over the process
-    4.
-    5. Parent waitpid(). Waits for child process, which is executing the execve, to end.
-
-
-
-
-    probably have a function that is executed in the child process that runs execve
-        takes in a command, the inputs
-    all the execve should be run in child processes
-
-
-    Main logic
-    1. validate inputs
-        a. check number of argc, argv[]
-        b. check input file exists
-            - XXXXXXX need to know the behaviour if the input file does not exist
-        c. check output file exist
-            - if it does exist -> check writable
-                - check if error handling needs to be done here or if execve already handles this portion by default
-            - if it does not exist -> create
-
-    2. pipe():
-        a. for n commands, create (n - 1) pipes
-        b. malloc an array (n -1) of arrays {{0, 1}, {0, 1}, {0, 1}, {0, 1}} to store the all the child process PIDs.
-
-    3. fork():
-        a. for n commands, create n child processes. Child processes should only be created from the parent process
-        b. each child process should have access to all the pipes created previously
-
-    4. close
-
-    validate number of argc, argv[]
-        a. argc must be equal to 5
-
-
-
-
-
-
-*/
+#include "../include/libft.h"
+#include "../include/ft_printf.h"
 
 /* Description: XXXXX
 
 */
 
-
-
-
-
-	//might want to combine all the init stuff together in 1 function
-    //1. Init pipex structure
-
-    //2. Check if there are at least 4 arguments -> done
-
-    //3. get cmds from the argv[]
-
-    //4. get cmd arguments from argv[]
-
-
-
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_pipex *pp;
-	char	*cmds;
 	char	**paths;
 
 	if (argc < 5)
@@ -101,35 +36,4 @@ int	main(int argc, char *argv[], char *envp[])
 	exe_cmd(pp);
 	free_ft_split(paths);
 	free_pipex(pp);
-
-	// printf("Pointer for pp->cmd_paths: %p | Pointer for pp->cmd_args: %p\n", pp->cmd_paths, pp->cmd_args);
-	// return (0);
-
-
-	// pp = init_main(argc, argv, envp);
-
-	// exe_cmd(pp);
-	//smth to clean up all the mallocs
-
-
-
-	// i = 0;
-
-
-
-
-	// printf("Inside the main to test init\n");
-	// printf("No. of argc: %d\n", argc);
-    // pp = init_main(argc, argv, envp);
-	// //check all the shit inside the structure
-    // printf("No. of commands: %d\n", pp->cmd_num);
-
-	// while (i < pp->cmd_num)
-	// {
-	// 	printf("Command path: %s\n", pp->cmd_paths[j]);
-	// 	printf("Command arg: 0[%s] 1[%s]\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
-	// 	i++;
-	// }
-	// printf("Infile fd: %d | Outfile fd: %d\n", pp->fd_in, pp->fd_out);
-	// exe_cmd(pp);
 }

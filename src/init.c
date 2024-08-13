@@ -60,9 +60,7 @@ char    **get_paths(char *envp[])
 {
     char    *path;
     char    **paths;
-    int     i;
 
-    i = 0;
     path = NULL;
     while(*envp)
     {
