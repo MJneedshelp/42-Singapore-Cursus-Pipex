@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/13 10:28:04 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/13 17:06:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include "../include/ft_printf.h"
 
 
+/* Description:
 
+*/
 
 void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 {
@@ -41,7 +43,7 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 
 */
 
-void	exe_cmd(t_pipex *pp)
+int	exe_cmd(t_pipex *pp)
 {
 	int	fd[2];
 	int	ctr;
@@ -51,21 +53,28 @@ void	exe_cmd(t_pipex *pp)
 	ctr = 0;
 	while (ctr < pp->cmd_num)
 	{
-		if (pipe(fd) == -1)
-			// return (perror(""), 1);
-			return;
+		if (ctr < pp->cmd_num - 1)
+		{
+			if (pipe(fd) == -1)
+				return (perror(""), 1);
+		}
 		pid_chd = fork();
 		if (pid_chd < 0)
-			// return (perror(""), 2);
-			return;
+			return (perror(""), 2);
 		if (pid_chd == 0)
 		{
 			redirection(fd, ctr, pp, fd_in);
-			execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL);
+			ft_putendl_fd(pp->cmd_paths[ctr], 2);
+			if (execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL) == -1)
+				perror(pp->cmd_paths[ctr]);
 		}
-		fd_in = fd[0];
-		close(fd[1]);
-		waitpid(pid_chd, NULL, 0);
+		if (ctr < pp->cmd_num)
+		{
+			fd_in = fd[0];
+			close(fd[1]);
+			waitpid(pid_chd, NULL, 0);
+		}
 		ctr++;
 	}
+	return (0);
 }
