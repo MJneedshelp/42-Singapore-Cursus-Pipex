@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 17:06:43 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/13 01:10:18 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/14 13:39:48 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,12 @@ void	free_pipex(t_pipex *pp)
 	free_pipex_empty(pp);
 }
 
-/* Description: frees memory allocated for members in an array of strings.
-   Takes in an integer n: the number of elements in the string array. XXXX
+/* Description: frees memory allocated for members in an array of strings
+   generated from ft_split. The array of strings has NULL as the final member.
+   Actions:
+	1. Frees the memory allocated for each pointer in the string array (up
+	   to the NULL member)
+	2. Frees the memory allocated for the array
 */
 
 void	free_ft_split(char **arr)
