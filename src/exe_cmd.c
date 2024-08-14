@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/13 17:06:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/14 08:58:24 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 		dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
+	close(fd_in);
 }
 
 
@@ -63,18 +64,30 @@ int	exe_cmd(t_pipex *pp)
 			return (perror(""), 2);
 		if (pid_chd == 0)
 		{
+			ft_putendl_fd("In child now. PID:", 2);
+			ft_putendl_fd(ft_itoa(pid_chd), 2);
 			redirection(fd, ctr, pp, fd_in);
 			ft_putendl_fd(pp->cmd_paths[ctr], 2);
 			if (execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL) == -1)
 				perror(pp->cmd_paths[ctr]);
+			exit(EXIT_FAILURE);
 		}
-		if (ctr < pp->cmd_num)
+		else
 		{
-			fd_in = fd[0];
-			close(fd[1]);
 			waitpid(pid_chd, NULL, 0);
+			if (ctr < pp->cmd_num)
+			{
+				fd_in = fd[0];
+				close(fd[1]);
+			}
+
+			ft_putendl_fd("In parent now. Counter:", 2);
+			ft_putendl_fd(ft_itoa(ctr), 2);
+			ft_putendl_fd("In parent now. Child PID:", 2);
+			ft_putendl_fd(ft_itoa(pid_chd), 2);
+			ctr++;
 		}
-		ctr++;
+
 	}
 	return (0);
 }
