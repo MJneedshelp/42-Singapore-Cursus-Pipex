@@ -12,6 +12,8 @@
 
 #include "../include/pipex.h"
 #include "../include/libft.h"
+#include "../include/ft_printf.h"
+
 
 /* Description: generates a cmd path based on the full command and the paths
    passed in.
@@ -53,6 +55,7 @@ char	*get_cmd_path(char *full_cmd, char **paths)
 		i++;
 		free (cmd_path);
 	}
+	ft_printf("%s: command no found\n", cmd);
 	return (cmd);
 }
 

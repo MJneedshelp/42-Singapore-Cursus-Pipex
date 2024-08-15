@@ -18,9 +18,10 @@ int main(void)
     char    *args[] = {"-l", NULL};
     char    *envp[] = {NULL};
 
-    execve("/usr/bin/ls", args, envp);
+    // execve("/usr/bin/ls", args, envp);
+    execve("ls", args, envp);
 
-    printf("We are not going to see this\n");
-    return (1);
+	perror("");
+	return (1);
 
 }

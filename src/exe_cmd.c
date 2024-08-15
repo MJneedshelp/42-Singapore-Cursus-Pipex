@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/14 13:35:49 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/15 08:20:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ int	exe_cmd(t_pipex *pp)
 		if (pid_chd == 0)
 		{
 			redirection(fd, ctr, pp, fd_in);
-			if (execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL) == -1)
-				perror(pp->cmd_paths[ctr]);
+			execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL);
 			exit(EXIT_FAILURE);
 		}
 		waitpid(pid_chd, NULL, 0);
