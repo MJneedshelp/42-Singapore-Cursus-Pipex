@@ -49,7 +49,8 @@ void	init_files(t_pipex *pp, char *infile, char *outfile)
 	else
 		pp->fd_in = open(infile, O_RDONLY);
 	if (access(outfile, F_OK) < 0)
-		pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		// pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
 	{
 		if (access(outfile, W_OK) < 0)
@@ -59,7 +60,8 @@ void	init_files(t_pipex *pp, char *infile, char *outfile)
 			exit(EXIT_FAILURE);
 		}
 		else
-			pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);
+			// pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	}
 
 

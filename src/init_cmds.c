@@ -45,6 +45,8 @@ char	*get_cmd_path(char *full_cmd, char **paths)
 	free_ft_split(split);
 	if (cmd == NULL)
 		return (NULL);
+	if (access(cmd, X_OK) == 0)
+		return (cmd);
 	while (paths[i] != NULL)
 	{
 		cmd_path = ft_pathjoin(paths[i], cmd);

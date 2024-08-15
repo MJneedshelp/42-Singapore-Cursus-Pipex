@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/15 08:20:36 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/15 10:30:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,14 @@
 #include "../include/ft_printf.h"
 
 
-/* Description:
-
+/* Description: uses dup2 to redirect the inputs for each command. Commands
+   always read from stdin and outputs to stdout
+   Actions:
+	1. When executing the first command, clone the infile_fd to stdin
+	2. When executing subsequent commands, clone the read end of the pipe to
+	   stdin. Clone the write end of the pipe to stdout
+	3. When executing the final command, clone the outfile_fd to stdout
+	4. Close all the unused fds on the pipe
 */
 
 void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
