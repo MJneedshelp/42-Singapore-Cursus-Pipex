@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 17:06:43 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/14 13:39:48 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/16 04:16:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	free_pipex_empty(t_pipex *pp)
 {
 	free(pp->cmd_paths);
 	free(pp->cmd_args);
+	if (pp->here_doc_path != NULL)
+		free (pp->here_doc_path);
 	free(pp);
 }
 

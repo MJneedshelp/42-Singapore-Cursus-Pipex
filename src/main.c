@@ -14,6 +14,8 @@
 #include "../include/pipex.h"
 #include "../include/libft.h"
 #include "../include/ft_printf.h"
+#include "../include/get_next_line.h"
+
 
 /* Description: Initialises the t_pipex structure by allocating memory with
    malloc for the following members:
@@ -45,6 +47,7 @@ t_pipex *init_pipex(int cmd_num)
         free (pp);
         exit (EXIT_FAILURE);
     }
+	pp->here_doc_path = NULL;
     return (pp);
 }
 
@@ -89,10 +92,20 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex *pp;
 	char	**paths;
 
-	if (argc < 5)
-		return (1);
-	pp = init_pipex(argc - 3);
-	init_files(pp, argv[1], argv[argc - 1]);
+	if (strncmp(argv[1], "here_doc", 9) == 0 && ft_strlen(argv[1]) == 8)
+	{
+		if (argc < 6)
+			return (1);
+		pp = init_pipex(argc - 4);
+		init_files_here_doc(pp, argv[2], argv[argc - 1]);
+ 	}
+	else
+	{
+		if (argc < 5)
+				return (1);
+		pp = init_pipex(argc - 3);
+		init_files(pp, argv[1], argv[argc - 1]);
+	}
 	paths = get_paths(envp);
 	if (paths == NULL)
 		free_pipex_empty(pp);
@@ -101,5 +114,12 @@ int	main(int argc, char *argv[], char *envp[])
 	exe_cmd(pp);
 	free_ft_split(paths);
 	close_files(pp);
-	free_pipex(pp); 
+	free_pipex(pp);
 }
+
+
+//here_doc logic
+//use gnl to read and write into a temp file
+//use the temp file as the infile for init file
+//gotta unlink the file at the end
+

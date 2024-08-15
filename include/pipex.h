@@ -29,6 +29,7 @@ typedef struct s_pipex
     int		cmd_num;            //number of commands
     int		fd_in;            //infile from main(argv) -> check if you need this in the struct
     int		fd_out;           //outfile from main(argv) -> check if you need this in the struct
+	char	*here_doc_path;
 }   t_pipex;
 
 
@@ -44,6 +45,10 @@ void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths);
 void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
 int		exe_cmd(t_pipex *pp);
 void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in);
+void	init_files_here_doc(t_pipex *pp, char *limit, char *outfile);
+void	init_here_doc_temp(t_pipex *pp);
+
+
 
 /* Clean up functions */
 void	free_pipex_empty(t_pipex *pp);
