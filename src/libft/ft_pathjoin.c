@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 16:48:03 by mintan            #+#    #+#             */
-/*   Updated: 2024/05/23 13:53:28 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/17 12:08:01 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 char	*ft_pathjoin(char const *s1, char const *s2)
 {
 	char	*intermediate_path;
-	char		*combined_path;
+	char	*combined_path;
 
 	intermediate_path = ft_strjoin(s1, "/");
 	if (intermediate_path == NULL)
@@ -29,5 +29,4 @@ char	*ft_pathjoin(char const *s1, char const *s2)
 	combined_path = ft_strjoin(intermediate_path, s2);
 	free(intermediate_path);
 	return (combined_path);
-
 }

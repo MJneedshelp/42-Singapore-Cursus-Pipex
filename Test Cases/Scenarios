@@ -1,0 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Scenarios                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/17 15:49:14 by mintan            #+#    #+#             */
+/*   Updated: 2024/08/17 20:08:02 by mintan           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* =========================== Normal file access ============================*/
+/* Scenario:
+	1. Both infile and outfile exists
+	2. Normal commands
+	3. Check if there are memory leaks
+*/
+
+Test 1
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "grep this" "wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" grep "this" | wc
+
+Test 2
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "grep this" "wc -l" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" grep "this" | wc -l
+
+Test 3
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | grep "last"
+
+Test 4
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "ls -l" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | ls -l
+
+/* ======================== /dev/random | /dev/urandom =======================*/
+/* Scenario:
+	1. Programme should still run if cat is used on either files
+	2. Check if there are memory leaks
+*/
+
+Test 5
+Command: valgrind --leak-check=full ./pipex /dev/random "cat" "head -c5" "Test Cases/outfile"
+Comparison: < /dev/random cat | head -c5
+
+Test 6
+Command: valgrind --leak-check=full ./pipex /dev/urandom "cat" "head -c5" "Test Cases/outfile"
+Comparison: < /dev/urandom cat | head -c5
+
+/* ========================== Abnormal file access ===========================*/
+/* Scenario:
+	1. No infile
+	2. Infile no read permission
+	3. No outfile
+	4. Check for memory leaks
+*/
+
+Test 7
+Command: valgrind --leak-check=full ./pipex wrong "grep this" "wc" "Test Cases/outfile"
+Comparison: < wrong grep "this" | wc
+
+Test 8
+Command: valgrind --leak-check=full ./pipex wrong "grep this" "ls -l" "Test Cases/outfile"
+Comparison: < wrong grep "this" | ls -l
+
+Test 9
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile_no_read_permission" "grep this" "wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile_no_read_permission" grep "this" | wc
+
+Test 10
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/nofile"
+Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/nofile"
+
+Test 11
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/outfile_no_write_perm"
+Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile_no_write_perm"
+
+/*============================== Path unset ===============================*/
+/* Scenario:
+	1. In terminal, run "unset PATH"
+	2. Commands will not be found unless the full path is given
+	3. Check for memory leaks
+*/
+
+Test 12
+Command: /usr/bin/valgrind --leak-check=full  ./pipex "Test Cases/infile" "cat" "/usr/bin/wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile"
+
+/*========================= Wrong Commands / flags ==========================*/
+/* Scenario:
+	1. Use wrong commands
+	2. Use correct commands with wrong flags
+	3. Check for memory leaks in both the parent and child process
+*/
+
+Test 13
+Command: valgrind --leak-check=full  ./pipex "Test Cases/infile" "wrong" "wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" wrong | wc > "Test Cases/outfile"
+
+Test 14
+Command: valgrind --leak-check=full  ./pipex "Test Cases/infile" "cat" "wc -o" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | wc -o > "Test Cases/outfile"
+
+/*========================= Multiple Commands ==========================*/
+
+Test 15
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep this" "grep course" "wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | grep "this" | grep "course" | wc
+
+Test 16
+Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep this" "grep course" "ls" "wc" "Test Cases/outfile"
+Comparison: < "Test Cases/infile" cat | grep "this" | grep "course" | ls | wc
+
+/*============================= here_doc ==============================*/
+
+Test 16
+Command: valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" "Test Cases/outfile_bonus"
+Comparison: cat << EOF | wc -l >> "Test Cases/outfile_bonus"

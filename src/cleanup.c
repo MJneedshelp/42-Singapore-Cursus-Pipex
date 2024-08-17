@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 17:06:43 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/16 04:16:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/17 18:24:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,16 @@ void	free_astray(char ***arr, int n)
 	}
 }
 
-/* Description: takes in the t_pipex structure and frees the memory allocated
-   for each member systematically. This function is only used after the
-   cmd_paths and cmd_args are populated.
+/* Description: cleans up the programme at the end. Frees allocated memory,
+   close open file descriptors. This function is only used at the end of the
+   programme.
 */
 
-void	free_pipex(t_pipex *pp)
+void	pipex_cleanup(t_pipex *pp, char **paths)
 {
+	close_files(pp);
+	if (paths != NULL)
+		free_ft_split(paths);
 	free_astray(pp->cmd_args, pp->cmd_num);
 	free_stray(pp->cmd_paths, pp->cmd_num);
 	free_pipex_empty(pp);

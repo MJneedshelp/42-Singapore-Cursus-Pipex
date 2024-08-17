@@ -6,14 +6,13 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/16 17:50:40 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/17 19:06:58 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 #include "../include/libft.h"
 #include "../include/ft_printf.h"
-
 
 /* Description: uses dup2 to redirect the inputs for each command. Commands
    always read from stdin and outputs to stdout
@@ -41,17 +40,49 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 	close(fd[1]);
 }
 
+/* Description: creates a pipe if it is not the final command
+*/
 
+int	*create_pipe(t_pipex *pp, int ctr, int *fd)
+{
+	if (ctr < pp->cmd_num - 1)
+	{
+		if (pipe(fd) == -1)
+			exit(EXIT_FAILURE);
+	}
+	return (fd);
+}
+
+/* Description: Closes all unused file descriptors in the parent process.
+   Reassigns the read end of the pipe for the next command. Only executes
+   this before the final command; no pipe is created for the final command.
+*/
+
+int	close_pipe_fd(t_pipex *pp, int ctr, int *fd)
+{
+	if (ctr < pp->cmd_num)
+	{
+		close(fd[1]);
+		return (fd[0]);
+	}
+	return (STDIN_FILENO);
+}
 
 /* Description: Executes all the commands given
    Actions: perform the following in a loop until all commands are executed
-	1. Create a pipe
+	1. Create a pipe if it is not the final command
 	2. Create a child process to execute the command
-
-
+	3. Within the child process:
+	   - Redirect the inputs and outputs of the process
+	   - Execute the command using execve. Execve takes over the child process
+	     if it does not fail
+	   - Exit the child process if the execve encounters and error and fails
+	4. In the parent process:
+	   - Wait for the child process to end
+	   - Close all unused fds on the pipe
 */
 
-int	exe_cmd(t_pipex *pp)
+void	exe_cmd(t_pipex *pp, char **paths)
 {
 	int	fd[2];
 	int	ctr;
@@ -61,27 +92,19 @@ int	exe_cmd(t_pipex *pp)
 	ctr = 0;
 	while (ctr < pp->cmd_num)
 	{
-		if (ctr < pp->cmd_num - 1)
-		{
-			if (pipe(fd) == -1)
-				return (perror(""), 1);
-		}
+		create_pipe(pp, ctr, fd);
 		pid_chd = fork();
 		if (pid_chd < 0)
-			return (perror(""), 2);
+			exit (EXIT_FAILURE);
 		if (pid_chd == 0)
 		{
 			redirection(fd, ctr, pp, fd_in);
 			execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL);
+			pipex_cleanup(pp, paths);
 			exit(EXIT_FAILURE);
 		}
-		waitpid(pid_chd, NULL, 0);
-		if (ctr < pp->cmd_num)
-		{
-			fd_in = fd[0];
-			close(fd[1]);
-		}
+		waitpid(pid_chd, NULL, WNOHANG);
+		fd_in = close_pipe_fd(pp, ctr, fd);
 		ctr++;
 	}
-	return (0);
 }
