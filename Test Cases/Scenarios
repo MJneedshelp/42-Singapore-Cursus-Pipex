@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 15:49:14 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/17 20:08:02 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/17 20:11:13 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@
 */
 
 Test 1
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "grep this" "wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" grep "this" | wc
+Command: valgrind --leak-check=full ./pipex "infile" "grep this" "wc" "outfile"
+Comparison: < "infile" grep "this" | wc
 
 Test 2
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "grep this" "wc -l" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" grep "this" | wc -l
+Command: valgrind --leak-check=full ./pipex "infile" "grep this" "wc -l" "outfile"
+Comparison: < "infile" grep "this" | wc -l
 
 Test 3
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | grep "last"
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "outfile"
+Comparison: < "infile" cat | grep "last"
 
 Test 4
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "ls -l" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | ls -l
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "ls -l" "outfile"
+Comparison: < "infile" cat | ls -l
 
 /* ======================== /dev/random | /dev/urandom =======================*/
 /* Scenario:
@@ -40,11 +40,11 @@ Comparison: < "Test Cases/infile" cat | ls -l
 */
 
 Test 5
-Command: valgrind --leak-check=full ./pipex /dev/random "cat" "head -c5" "Test Cases/outfile"
+Command: valgrind --leak-check=full ./pipex /dev/random "cat" "head -c5" "outfile"
 Comparison: < /dev/random cat | head -c5
 
 Test 6
-Command: valgrind --leak-check=full ./pipex /dev/urandom "cat" "head -c5" "Test Cases/outfile"
+Command: valgrind --leak-check=full ./pipex /dev/urandom "cat" "head -c5" "outfile"
 Comparison: < /dev/urandom cat | head -c5
 
 /* ========================== Abnormal file access ===========================*/
@@ -56,24 +56,24 @@ Comparison: < /dev/urandom cat | head -c5
 */
 
 Test 7
-Command: valgrind --leak-check=full ./pipex wrong "grep this" "wc" "Test Cases/outfile"
+Command: valgrind --leak-check=full ./pipex wrong "grep this" "wc" "outfile"
 Comparison: < wrong grep "this" | wc
 
 Test 8
-Command: valgrind --leak-check=full ./pipex wrong "grep this" "ls -l" "Test Cases/outfile"
+Command: valgrind --leak-check=full ./pipex wrong "grep this" "ls -l" "outfile"
 Comparison: < wrong grep "this" | ls -l
 
 Test 9
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile_no_read_permission" "grep this" "wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile_no_read_permission" grep "this" | wc
+Command: valgrind --leak-check=full ./pipex "infile_no_read_permission" "grep this" "wc" "outfile"
+Comparison: < "infile_no_read_permission" grep "this" | wc
 
 Test 10
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/nofile"
-Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/nofile"
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "nofile"
+Comparison: < "infile" cat | grep "last" > "nofile"
 
 Test 11
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep last" "Test Cases/outfile_no_write_perm"
-Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile_no_write_perm"
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "outfile_no_write_perm"
+Comparison: < "infile" cat | grep "last" > "outfile_no_write_perm"
 
 /*============================== Path unset ===============================*/
 /* Scenario:
@@ -83,8 +83,8 @@ Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile_no_wri
 */
 
 Test 12
-Command: /usr/bin/valgrind --leak-check=full  ./pipex "Test Cases/infile" "cat" "/usr/bin/wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile"
+Command: /usr/bin/valgrind --leak-check=full  ./pipex "infile" "cat" "/usr/bin/wc" "outfile"
+Comparison: < "infile" cat | grep "last" > "outfile"
 
 /*========================= Wrong Commands / flags ==========================*/
 /* Scenario:
@@ -94,25 +94,25 @@ Comparison: < "Test Cases/infile" cat | grep "last" > "Test Cases/outfile"
 */
 
 Test 13
-Command: valgrind --leak-check=full  ./pipex "Test Cases/infile" "wrong" "wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" wrong | wc > "Test Cases/outfile"
+Command: valgrind --leak-check=full  ./pipex "infile" "wrong" "wc" "outfile"
+Comparison: < "infile" wrong | wc > "outfile"
 
 Test 14
-Command: valgrind --leak-check=full  ./pipex "Test Cases/infile" "cat" "wc -o" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | wc -o > "Test Cases/outfile"
+Command: valgrind --leak-check=full  ./pipex "infile" "cat" "wc -o" "outfile"
+Comparison: < "infile" cat | wc -o > "outfile"
 
 /*========================= Multiple Commands ==========================*/
 
 Test 15
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep this" "grep course" "wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | grep "this" | grep "course" | wc
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "wc" "outfile"
+Comparison: < "infile" cat | grep "this" | grep "course" | wc
 
 Test 16
-Command: valgrind --leak-check=full ./pipex "Test Cases/infile" "cat" "grep this" "grep course" "ls" "wc" "Test Cases/outfile"
-Comparison: < "Test Cases/infile" cat | grep "this" | grep "course" | ls | wc
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "ls" "wc" "outfile"
+Comparison: < "infile" cat | grep "this" | grep "course" | ls | wc
 
 /*============================= here_doc ==============================*/
 
 Test 16
-Command: valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" "Test Cases/outfile_bonus"
-Comparison: cat << EOF | wc -l >> "Test Cases/outfile_bonus"
+Command: valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" "outfile_bonus"
+Comparison: cat << EOF | wc -l >> "outfile_bonus"
