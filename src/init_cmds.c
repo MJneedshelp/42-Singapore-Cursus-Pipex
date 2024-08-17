@@ -73,14 +73,19 @@ void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths)
 	int		j;
 
 	if (pp->here_doc_path == NULL)
+	{
+		printf("No here_doc. Correct\n"),
 		i = 2;
+	}
 	else
+	{
+		printf("Has here_doc. Correct\n"),
 		i = 3;
+	}
 	j = 0;
 	while (i < argc - 1)
 	{
 		pp->cmd_paths[j] = get_cmd_path(argv[i], paths);
-		printf("cmd path: %s\n", pp->cmd_paths[j]);
 		if (pp->cmd_paths[j] == NULL)
 		{
 			free_stray(pp->cmd_paths, j);
@@ -104,7 +109,9 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
 	int		j;
 
 	if (pp->here_doc_path == NULL)
+	{
 		i = 2;
+	}
 	else
 		i = 3;
 	j = 0;
@@ -112,7 +119,6 @@ void	init_cmd_args(t_pipex *pp, int argc, char *argv[])
 	{
 		cmd_arg = ft_split(argv[i], ' ');
 		pp->cmd_args[j] = cmd_arg;
-		printf("cmd arg[0]: %s | cmd arg[1]: %s\n", pp->cmd_args[j][0], pp->cmd_args[j][1]);
 		if (cmd_arg == NULL)
 		{
 			free_astray(pp->cmd_args, j);

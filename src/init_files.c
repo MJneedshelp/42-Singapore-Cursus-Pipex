@@ -121,8 +121,9 @@ void	init_here_doc_temp(t_pipex *pp)
 void	init_files_here_doc(t_pipex *pp, char *limit, char *outfile)
 {
 	init_here_doc_temp(pp);
-	pp->fd_in = open(pp->here_doc_path, O_CREAT | O_RDWR | O_APPEND);
-	printf("here_doc fd: %d\n", pp->fd_in);
+	// pp->fd_in = open(pp->here_doc_path, O_CREAT | O_RDWR | O_APPEND);
+	pp->fd_in = open(pp->here_doc_path, O_CREAT | O_RDONLY | O_APPEND);
+
 	populate_here_doc(pp, limit);
 	if (access(outfile, F_OK) < 0)
 		pp->fd_out = open(outfile, O_CREAT | O_WRONLY | O_APPEND, 0644);

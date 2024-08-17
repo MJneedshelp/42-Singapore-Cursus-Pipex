@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 15:57:29 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/16 05:59:17 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/16 17:50:40 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 {
 	if (ctr == 0)
 	{
-		printf("reading from here_doc fd: %d\n", pp->fd_in);
 		dup2(pp->fd_in, STDIN_FILENO);
 	}
 	else
