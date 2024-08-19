@@ -43,12 +43,12 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 /* Description: creates a pipe if it is not the final command
 */
 
-int	*create_pipe(t_pipex *pp, int ctr, int *fd)
+int	*create_pipe(t_pipex *pp, int ctr, int *fd, char **paths)
 {
 	if (ctr < pp->cmd_num - 1)
 	{
 		if (pipe(fd) == -1)
-			exit(EXIT_FAILURE);
+			pipex_cleanup(pp, paths, EXIT_FAILURE);
 	}
 	return (fd);
 }
@@ -68,6 +68,25 @@ int	close_pipe_fd(t_pipex *pp, int ctr, int *fd)
 	return (STDIN_FILENO);
 }
 
+/* Description: waits for all the child processes to end in the parent process.
+   Waits for 1 less child process if the infile is /dev/random or /dev/urandom
+*/
+
+void	wait_children(t_pipex *pp)
+{
+	int	ctr;
+
+	if (pp->infile_random == 1)
+		ctr = 1;
+	else
+		ctr = 0;
+	while (ctr < pp->cmd_num)
+	{
+		wait(NULL);
+		ctr++;
+	}
+}
+
 /* Description: Executes all the commands given
    Actions: perform the following in a loop until all commands are executed
 	1. Create a pipe if it is not the final command
@@ -78,7 +97,8 @@ int	close_pipe_fd(t_pipex *pp, int ctr, int *fd)
 	     if it does not fail
 	   - Exit the child process if the execve encounters and error and fails
 	4. In the parent process:
-	   - Wait for the child process to end
+	   - Wait for the child process to end after all the pipes and child
+	     processes are created
 	   - Close all unused fds on the pipe
 */
 
@@ -92,19 +112,20 @@ void	exe_cmd(t_pipex *pp, char **paths)
 	ctr = 0;
 	while (ctr < pp->cmd_num)
 	{
-		create_pipe(pp, ctr, fd);
+		create_pipe(pp, ctr, fd, paths);
 		pid_chd = fork();
 		if (pid_chd < 0)
-			exit (EXIT_FAILURE);
+			pipex_cleanup(pp, paths, EXIT_FAILURE);
 		if (pid_chd == 0)
 		{
 			redirection(fd, ctr, pp, fd_in);
 			execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL);
-			pipex_cleanup(pp, paths);
-			exit(EXIT_FAILURE);
+			pipex_cleanup(pp, paths, EXIT_FAILURE);
 		}
-		waitpid(pid_chd, NULL, WNOHANG);
+		if (pp->infile_random == 1 && ctr == 0)
+			waitpid(pid_chd, NULL, WNOHANG);
 		fd_in = close_pipe_fd(pp, ctr, fd);
 		ctr++;
 	}
+	wait_children(pp);
 }

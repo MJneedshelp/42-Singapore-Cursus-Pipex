@@ -75,6 +75,20 @@ Test 11
 Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "outfile_no_write_perm"
 Comparison: < "infile" cat | grep "last" > "outfile_no_write_perm"
 
+/* ========================== Concurrency ===========================*/
+/* Scenario:
+	1. Child processes run should run concurrently. Test with sleep
+	2. Check for memory leaks
+*/
+
+Test 12
+Command:time valgrind --leak-check=full ./pipex "infile" "sleep 5" "sleep 2" "outfile"
+Comparison: < "infile" sleep 5 | sleep 2 > "outfile"
+
+Test 13
+Command:time valgrind --leak-check=full ./pipex "infile" "sleep 2" "sleep 5" "outfile"
+Comparison: < "infile" sleep 2 | sleep 5 > "outfile"
+
 /*============================== Path unset ===============================*/
 /* Scenario:
 	1. In terminal, run "unset PATH"
@@ -82,7 +96,7 @@ Comparison: < "infile" cat | grep "last" > "outfile_no_write_perm"
 	3. Check for memory leaks
 */
 
-Test 12
+Test 14
 Command: /usr/bin/valgrind --leak-check=full  ./pipex "infile" "cat" "/usr/bin/wc" "outfile"
 Comparison: < "infile" cat | grep "last" > "outfile"
 
@@ -93,26 +107,26 @@ Comparison: < "infile" cat | grep "last" > "outfile"
 	3. Check for memory leaks in both the parent and child process
 */
 
-Test 13
+Test 15
 Command: valgrind --leak-check=full  ./pipex "infile" "wrong" "wc" "outfile"
 Comparison: < "infile" wrong | wc > "outfile"
 
-Test 14
+Test 16
 Command: valgrind --leak-check=full  ./pipex "infile" "cat" "wc -o" "outfile"
 Comparison: < "infile" cat | wc -o > "outfile"
 
 /*========================= Multiple Commands ==========================*/
 
-Test 15
+Test 17
 Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "wc" "outfile"
 Comparison: < "infile" cat | grep "this" | grep "course" | wc
 
-Test 16
+Test 18
 Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "ls" "wc" "outfile"
 Comparison: < "infile" cat | grep "this" | grep "course" | ls | wc
 
 /*============================= here_doc ==============================*/
 
-Test 16
+Test 19
 Command: valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" "outfile_bonus"
 Comparison: cat << EOF | wc -l >> "outfile_bonus"

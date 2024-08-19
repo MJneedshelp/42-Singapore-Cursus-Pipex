@@ -21,7 +21,8 @@ LIBDIR = $(SRCDIR)/libft
 LIBFT_LIB = $(LIBDIR)/libft.a
 # Double check sources again
 PIPEX_SRCS = $(SRCDIR)/main.c $(SRCDIR)/init_files.c \
-			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c
+			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c \
+			$(SRCDIR)/check_infile.c
 PIPEX_OBJ = $(PIPEX_SRCS:.c=.o)
 
 # Target to make using Make all

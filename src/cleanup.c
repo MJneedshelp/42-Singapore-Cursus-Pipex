@@ -70,11 +70,11 @@ void	free_astray(char ***arr, int n)
 }
 
 /* Description: cleans up the programme at the end. Frees allocated memory,
-   close open file descriptors. This function is only used at the end of the
-   programme.
+   close open file descriptors and exits the programe. This function is
+   only used either at the end of the programme or when an error occurs.
 */
 
-void	pipex_cleanup(t_pipex *pp, char **paths)
+void	pipex_cleanup(t_pipex *pp, char **paths, int exit_code)
 {
 	close_files(pp);
 	if (paths != NULL)
@@ -82,6 +82,7 @@ void	pipex_cleanup(t_pipex *pp, char **paths)
 	free_astray(pp->cmd_args, pp->cmd_num);
 	free_stray(pp->cmd_paths, pp->cmd_num);
 	free_pipex_empty(pp);
+	exit (exit_code);
 }
 
 /* Description: frees memory allocated for members in an array of strings

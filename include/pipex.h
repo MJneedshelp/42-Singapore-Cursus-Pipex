@@ -29,18 +29,20 @@ typedef struct s_pipex
 	int		fd_in;
 	int		fd_out;
 	char	*here_doc_path;
+	int		infile_random;
 }	t_pipex;
 
 /* Initialisation functions */
 t_pipex	*init_pipex(int cmd_num);
 char	**get_paths(char *envp[], t_pipex *pp);
 void	init_files(t_pipex *pp, char *infile, char *outfile);
+void	check_infile_random(t_pipex *pp, char *infile);
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths);
 void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
 char	*get_cmd(char *full_cmd);
 char	*get_cmd_path(char *full_cmd, char **paths);
 void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in);
-int		*create_pipe(t_pipex *pp, int ctr, int *fd);
+int		*create_pipe(t_pipex *pp, int ctr, int *fd, char **paths);
 int		close_pipe_fd(t_pipex *pp, int ctr, int *fd);
 void	exe_cmd(t_pipex *pp, char **paths);
 
@@ -51,7 +53,7 @@ void	populate_here_doc(t_pipex *pp, char *limit);
 
 /* Clean up functions */
 void	free_pipex_empty(t_pipex *pp);
-void	pipex_cleanup(t_pipex *pp, char **paths);
+void	pipex_cleanup(t_pipex *pp, char **paths, int exit_code);
 void	free_stray(char **arr, int n);
 void	free_astray(char ***arr, int n);
 void	free_ft_split(char **arr);
