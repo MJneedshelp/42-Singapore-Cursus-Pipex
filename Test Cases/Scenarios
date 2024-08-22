@@ -52,7 +52,8 @@ Comparison: < /dev/urandom cat | head -c5
 	1. No infile
 	2. Infile no read permission
 	3. No outfile
-	4. Check for memory leaks
+	4. Incorrect number of argumemnts
+	5. Check for memory leaks
 */
 
 Test 7
@@ -72,8 +73,14 @@ Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "nofile"
 Comparison: < "infile" cat | grep "last" > "nofile"
 
 Test 11
-Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" "outfile_no_write_perm"
+Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep last" ""outfile_no_write_perm""
 Comparison: < "infile" cat | grep "last" > "outfile_no_write_perm"
+
+Test 12
+Command: valgrind --leak-check=full ./pipex "infile" "grep last" "outfile"
+
+Test 13
+Command: valgrind --leak-check=full ./pipex "infile" here_doc "EOF" "cat" "outfile"
 
 /* ========================== Concurrency ===========================*/
 /* Scenario:
@@ -81,11 +88,11 @@ Comparison: < "infile" cat | grep "last" > "outfile_no_write_perm"
 	2. Check for memory leaks
 */
 
-Test 12
+Test 14
 Command:time valgrind --leak-check=full ./pipex "infile" "sleep 5" "sleep 2" "outfile"
 Comparison: < "infile" sleep 5 | sleep 2 > "outfile"
 
-Test 13
+Test 15
 Command:time valgrind --leak-check=full ./pipex "infile" "sleep 2" "sleep 5" "outfile"
 Comparison: < "infile" sleep 2 | sleep 5 > "outfile"
 
@@ -96,7 +103,7 @@ Comparison: < "infile" sleep 2 | sleep 5 > "outfile"
 	3. Check for memory leaks
 */
 
-Test 14
+Test 16
 Command: /usr/bin/valgrind --leak-check=full  ./pipex "infile" "cat" "/usr/bin/wc" "outfile"
 Comparison: < "infile" cat | grep "last" > "outfile"
 
@@ -107,26 +114,26 @@ Comparison: < "infile" cat | grep "last" > "outfile"
 	3. Check for memory leaks in both the parent and child process
 */
 
-Test 15
+Test 17
 Command: valgrind --leak-check=full  ./pipex "infile" "wrong" "wc" "outfile"
 Comparison: < "infile" wrong | wc > "outfile"
 
-Test 16
+Test 18
 Command: valgrind --leak-check=full  ./pipex "infile" "cat" "wc -o" "outfile"
 Comparison: < "infile" cat | wc -o > "outfile"
 
 /*========================= Multiple Commands ==========================*/
 
-Test 17
+Test 19
 Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "wc" "outfile"
 Comparison: < "infile" cat | grep "this" | grep "course" | wc
 
-Test 18
+Test 20
 Command: valgrind --leak-check=full ./pipex "infile" "cat" "grep this" "grep course" "ls" "wc" "outfile"
 Comparison: < "infile" cat | grep "this" | grep "course" | ls | wc
 
 /*============================= here_doc ==============================*/
 
-Test 19
+Test 21
 Command: valgrind --leak-check=full ./pipex here_doc EOF "cat" "wc -l" "outfile_bonus"
 Comparison: cat << EOF | wc -l >> "outfile_bonus"

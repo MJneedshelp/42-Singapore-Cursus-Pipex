@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 11:44:26 by mintan            #+#    #+#             */
-/*   Updated: 2024/08/17 12:19:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/08/22 09:30:08 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ char	**get_paths(char *envp[], t_pipex *pp)
 */
 void	print_arg_error_and_exit(void)
 {
-		ft_printf("Please run pipex in this fashion: \n");
-		ft_printf("./pipex infile cmd1 cmd2 outfile OR\n");
-		ft_printf("./pipex infile cmd1 cmd2 cmd3...cmdn outfile OR\n");
-		ft_printf("./pipex here_doc LIMITER cmd cmd1 outfile\n");
-		exit (EXIT_FAILURE);
+	ft_printf("Please run pipex in this fashion: \n");
+	ft_printf("./pipex infile cmd1 cmd2 outfile OR\n");
+	ft_printf("./pipex infile cmd1 cmd2 cmd3...cmdn outfile OR\n");
+	ft_printf("./pipex here_doc LIMITER cmd cmd1 outfile\n");
+	exit (EXIT_FAILURE);
 }
 
 /* Description: checks the number of arguments being passed into the pipex
