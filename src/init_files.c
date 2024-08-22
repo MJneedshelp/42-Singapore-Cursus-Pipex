@@ -45,7 +45,7 @@ void	init_files(t_pipex *pp, char *infile, char *outfile)
 {
 	if (access(infile, F_OK | R_OK) < 0)
 	{
-		perror("");
+		perror(infile);
 		pp->fd_in = open("/dev/null", O_RDONLY);
 	}
 	else

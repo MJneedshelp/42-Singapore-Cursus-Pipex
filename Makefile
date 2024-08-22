@@ -16,22 +16,33 @@ CFLAGS = -Wall -Werror -Wextra
 
 # Definitions
 NAME = pipex
+NAME_BONUS = pipex_bonus
 SRCDIR = src
 LIBDIR = $(SRCDIR)/libft
 LIBFT_LIB = $(LIBDIR)/libft.a
-# Double check sources again
 PIPEX_SRCS = $(SRCDIR)/main.c $(SRCDIR)/init_files.c \
 			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c \
 			$(SRCDIR)/check_infile.c
 PIPEX_OBJ = $(PIPEX_SRCS:.c=.o)
+BONUS_SRCS = $(SRCDIR)/main_bonus.c $(SRCDIR)/init_files.c \
+			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c \
+			$(SRCDIR)/check_infile.c
+BONUS_OBJ = $(BONUS_SRCS:.c=.o)
+
 
 # Target to make using Make all
 all: $(NAME) print_art
-# all: $(NAME)
 
-# Generate the programme by compiling the objects with libft.a
+# Target to make using Make bonus
+bonus: $(NAME_BONUS) print_art
+
+# Generate the mandatory programme by compiling the objects with libft.a
 $(NAME): $(LIBFT_LIB) $(PIPEX_OBJ)
 	$(CC) $(CFLAGS) $(PIPEX_OBJ) $(LIBFT_LIB) -o $@
+
+# Generate the bonus programme by compiling the objects with libft.a
+$(NAME_BONUS): $(LIBFT_LIB) $(BONUS_OBJ)
+	$(CC) $(CFLAGS) $(BONUS_OBJ) $(LIBFT_LIB) -o $@
 
 # Build the libft.a library
 $(LIBFT_LIB):
@@ -43,11 +54,11 @@ $(LIBFT_LIB):
 
 # Clear the build files
 clean:
-	rm -f $(PIPEX_OBJ)
+	rm -f $(PIPEX_OBJ) $(BONUS_OBJ)
 	cd $(LIBDIR) && make clean
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 	cd $(LIBDIR) && make fclean
 
 # Rule to rebuild the target

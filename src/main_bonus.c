@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -89,24 +89,38 @@ char	**get_paths(char *envp[], t_pipex *pp)
 */
 void	print_arg_error_and_exit(void)
 {
-	ft_printf("Please run pipex (mandatory) in this fashion: \n");
-	ft_printf("./pipex infile cmd1 cmd2 outfile\n");
+	ft_printf("Please run pipex in this fashion: \n");
+	ft_printf("./pipex infile cmd1 cmd2 outfile OR\n");
+	ft_printf("./pipex infile cmd1 cmd2 cmd3...cmdn outfile OR\n");
+	ft_printf("./pipex here_doc LIMITER cmd1 cmd2 outfile\n");
 	exit (EXIT_FAILURE);
 }
 
 /* Description: checks the number of arguments being passed into the pipex
-   programme. Prints an error message and exits the programme if argc is
-   not equal to 5.
+   programme. Exits the programme if the minimum arguments are not provided.
+   Also checks if the programme is running with here_doc.
+   Return:
+	- 0: not running with here_doc
+	- 1: running with here_doc
 */
-void	check_args(int argc)
+int	check_args(int argc, char *argv[])
 {
-	if (argc != 5)
+	if (argc < 2)
 		print_arg_error_and_exit();
+	if (ft_strncmp(argv[1], "here_doc", 9) == 0 && ft_strlen(argv[1]) == 8)
+	{
+		if (argc < 6)
+			print_arg_error_and_exit();
+		return (1);
+	}
+	if (argc < 5)
+		print_arg_error_and_exit();
+	return (0);
 }
 
 /* Description: Main function of the programme. Simulates the pipe command.
    Actions:
-	1. Checks if there are exactly 5 argc (1 programme name, s1 infile, 2 commands, 1 outfile)
+	1. Checks if there are at least 5 argc (1 infile, 2 commands, 1 outfile)
 	2. Initialise the pipex structure
 	3. Initialise the infile and outfile
 	4. Get environment paths: used to form the command paths
@@ -122,10 +136,21 @@ int	main(int argc, char *argv[], char *envp[])
 	t_pipex	*pp;
 	char	**paths;
 
-	check_args(argc);
-	pp = init_pipex(argc - 3);
-	init_files(pp, argv[1], argv[argc - 1]);
-	check_infile_random(pp, argv[1]);
+	if (check_args(argc, argv) == 1)
+	{
+		if (argc < 6)
+			return (1);
+		pp = init_pipex(argc - 4);
+		init_files_here_doc(pp, argv[2], argv[argc - 1]);
+	}
+	else
+	{
+		if (argc < 5)
+			return (1);
+		pp = init_pipex(argc - 3);
+		init_files(pp, argv[1], argv[argc - 1]);
+		check_infile_random(pp, argv[1]);
+	}
 	paths = get_paths(envp, pp);
 	init_cmd_paths(pp, argc, argv, paths);
 	init_cmd_args(pp, argc, argv);
