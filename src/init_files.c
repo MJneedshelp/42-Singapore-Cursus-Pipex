@@ -56,7 +56,7 @@ void	init_files(t_pipex *pp, char *infile, char *outfile)
 	{
 		if (access(outfile, W_OK) < 0)
 		{
-			perror("");
+			perror(outfile);
 			free_pipex_empty(pp);
 			exit(EXIT_FAILURE);
 		}
@@ -142,7 +142,7 @@ void	init_files_here_doc(t_pipex *pp, char *limit, char *outfile)
 	{
 		if (access(outfile, W_OK) < 0)
 		{
-			perror("");
+			perror(outfile);
 			free_pipex_empty(pp);
 			exit(EXIT_FAILURE);
 		}
