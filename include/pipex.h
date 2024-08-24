@@ -29,14 +29,12 @@ typedef struct s_pipex
 	int		fd_in;
 	int		fd_out;
 	char	*here_doc_path;
-	int		infile_random;
 }	t_pipex;
 
 /* Initialisation functions */
 t_pipex	*init_pipex(int cmd_num);
 char	**get_paths(char *envp[], t_pipex *pp);
 void	init_files(t_pipex *pp, char *infile, char *outfile);
-void	check_infile_random(t_pipex *pp, char *infile);
 void	init_cmd_paths(t_pipex *pp, int argc, char *argv[], char **paths);
 void	init_cmd_args(t_pipex *pp, int argc, char *argv[]);
 char	*get_cmd(char *full_cmd);

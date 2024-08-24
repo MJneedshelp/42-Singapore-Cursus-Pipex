@@ -21,12 +21,10 @@ SRCDIR = src
 LIBDIR = $(SRCDIR)/libft
 LIBFT_LIB = $(LIBDIR)/libft.a
 PIPEX_SRCS = $(SRCDIR)/main.c $(SRCDIR)/init_files.c \
-			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c \
-			$(SRCDIR)/check_infile.c
+			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c
 PIPEX_OBJ = $(PIPEX_SRCS:.c=.o)
 BONUS_SRCS = $(SRCDIR)/main_bonus.c $(SRCDIR)/init_files.c \
-			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c \
-			$(SRCDIR)/check_infile.c
+			$(SRCDIR)/init_cmds.c $(SRCDIR)/exe_cmd.c $(SRCDIR)/cleanup.c
 BONUS_OBJ = $(BONUS_SRCS:.c=.o)
 
 

@@ -48,7 +48,6 @@ t_pipex	*init_pipex(int cmd_num)
 		exit (EXIT_FAILURE);
 	}
 	pp->here_doc_path = NULL;
-	pp->infile_random = 0;
 	return (pp);
 }
 
@@ -106,7 +105,8 @@ void	check_args(int argc)
 
 /* Description: Main function of the programme. Simulates the pipe command.
    Actions:
-	1. Checks if there are exactly 5 argc (1 programme name, s1 infile, 2 commands, 1 outfile)
+	1. Checks if there are exactly 5 argc
+	   (1 programme name, 1 infile, 2 commands, 1 outfile)
 	2. Initialise the pipex structure
 	3. Initialise the infile and outfile
 	4. Get environment paths: used to form the command paths
@@ -125,7 +125,6 @@ int	main(int argc, char *argv[], char *envp[])
 	check_args(argc);
 	pp = init_pipex(argc - 3);
 	init_files(pp, argv[1], argv[argc - 1]);
-	check_infile_random(pp, argv[1]);
 	paths = get_paths(envp, pp);
 	init_cmd_paths(pp, argc, argv, paths);
 	init_cmd_args(pp, argc, argv);

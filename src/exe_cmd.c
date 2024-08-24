@@ -35,7 +35,6 @@ void	redirection(int *fd, int ctr, t_pipex *pp, int fd_in)
 		dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 	}
-		// dup2(fd_in, STDIN_FILENO);
 	if (ctr == pp->cmd_num - 1)
 		dup2(pp->fd_out, STDOUT_FILENO);
 	else
@@ -80,10 +79,6 @@ void	wait_children(t_pipex *pp)
 {
 	int	ctr;
 
-	// if (pp->infile_random == 1)
-	// 	ctr = 1;
-	// else
-	// 	ctr = 0;
 	ctr = 0;
 	while (ctr < pp->cmd_num)
 	{
@@ -127,8 +122,8 @@ void	exe_cmd(t_pipex *pp, char **paths)
 			execve(pp->cmd_paths[ctr], pp->cmd_args[ctr], NULL);
 			pipex_cleanup(pp, paths, EXIT_FAILURE);
 		}
-		// if (pp->infile_random == 1 && ctr == 0)
-		// 	waitpid(pid_chd, NULL, WNOHANG);
+		if (ctr > 0)
+			close (fd_in);
 		fd_in = close_pipe_fd(pp, ctr, fd);
 		ctr++;
 	}

@@ -48,7 +48,6 @@ t_pipex	*init_pipex(int cmd_num)
 		exit (EXIT_FAILURE);
 	}
 	pp->here_doc_path = NULL;
-	pp->infile_random = 0;
 	return (pp);
 }
 
@@ -149,7 +148,6 @@ int	main(int argc, char *argv[], char *envp[])
 			return (1);
 		pp = init_pipex(argc - 3);
 		init_files(pp, argv[1], argv[argc - 1]);
-		check_infile_random(pp, argv[1]);
 	}
 	paths = get_paths(envp, pp);
 	init_cmd_paths(pp, argc, argv, paths);
